@@ -1,0 +1,5 @@
+{
+  "name": "PR Commit Linter",
+  "description": "Automatically Lint PR Title to conform with the Conventional Commit Standard. Uses the `.commitlintrc.yml` file if present at root.",
+  "iconName": "commitlint"
+}
