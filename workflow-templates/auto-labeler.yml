@@ -21,11 +21,12 @@ jobs:
     steps:
       - name: Determine Label
         run: |
-          if [[ '${{ github.event.issue.title }}' =~ ^\[FEAT\]: ]]; then
+          TITLE=${{ github.event.issue.title }}
+          if [[ '${TITLE,,}' =~ ^\[?FEAT\]?: ]]; then
             echo "LABEL=feature" >> $GITHUB_ENV
-          elif [[ '${{ github.event.issue.title }}' =~ ^\[TASK\]: ]]; then
+          elif [[ '${TITLE,,}' =~ ^\[?TASK\]?: ]]; then
             echo "LABEL=task" >> $GITHUB_ENV
-          elif [[ '${{ github.event.issue.title }}' =~ ^\[BUG\]: ]]; then
+          elif [[ '${TITLE,,}' =~ ^\[?BUG\]?: ]]; then
             echo "LABEL=bug" >> $GITHUB_ENV
           else
             echo "LABEL=" >> $GITHUB_ENV
