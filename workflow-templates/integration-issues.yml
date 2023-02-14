@@ -1,3 +1,7 @@
+---
+# Automatically adds issues to the Integration Github project
+# if the issue is tagged with `integration`
+
 name: Add integration tasks to Integration project
 
 on:
@@ -11,7 +15,7 @@ jobs:
     name: Add integration issue to project
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/add-to-project@v0.4.0
+      - uses: actions/add-to-project@960fbad431afda394cfcf8743445e741acd19e85
         with:
           project-url: https://github.com/orgs/DARPA-ASKEM/projects/5
           github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
