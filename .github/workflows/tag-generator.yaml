@@ -9,6 +9,12 @@ name: Tag Generator
 
 on:
   workflow_call:
+    inputs:
+      branch:
+        description: 'The branch to verify against for `latest` (e.g `main` or `dev`)'
+        type: string
+        default: 'main'
+        required: false
     # Map the workflow outputs to job outputs
     outputs:
       tag:
@@ -25,7 +31,7 @@ jobs:
       - name: Generate apprropriate tag
         id: generate
         run: |
-          if [[ '${{ github.ref_type }}' == 'branch' && '${{ github.ref_name }}' == 'main' ]]; then
+          if [[ '${{ github.ref_type }}' == 'branch' && '${{ github.ref_name }}' == '${{ inputs.branch }}' ]]; then
             TAG=latest
           elif [[ '${{ github.ref_type }}' == 'branch' && '${{ github.event_name }}' == 'pull_request' ]]; then
             TAG=${{ github.head_ref }}
