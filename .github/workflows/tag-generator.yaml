@@ -2,8 +2,9 @@
 # This is a reusable workflow for generating a proper tag label
 # based on various criteria as follows:
 #   1. If triggered from a branch and it is 'main' -> latest
-#   2. If triggered through a tag and is of the form `vX.Y.Z` -> X.Y.Z
-#   3. Otherwise -> use the reference name provided (either the branch or tag name)
+#   2. If triggered from a branch and from a pull request -> pull request branch name
+#   3. If triggered through a tag and is of the form `vX.Y.Z` -> X.Y.Z
+#   4. Otherwise -> use the reference name provided (either the branch or tag name)
 name: Tag Generator
 
 on:
@@ -11,7 +12,7 @@ on:
     # Map the workflow outputs to job outputs
     outputs:
       tag:
-        description: "The tag generated"
+        description: 'The tag generated'
         value: ${{ jobs.tag-generator.outputs.tag }}
 
 jobs:
@@ -26,6 +27,8 @@ jobs:
         run: |
           if [[ '${{ github.ref_type }}' == 'branch' && '${{ github.ref_name }}' == 'main' ]]; then
             TAG=latest
+          elif [[ '${{ github.ref_type }}' == 'branch' && '${{ github.event_name }}' == 'pull_request' ]]; then
+            TAG=${{ github.head_ref }}
           else
             SEMVER=$( echo ${{ github.ref_name }} | sed -nre 's/^v[^0-9]*(([0-9]+\.)*[0-9]+(-[a-z]+)?).*/\1/p')
             if [[ -n $SEMVER ]]; then
