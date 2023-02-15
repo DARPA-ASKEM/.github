@@ -13,7 +13,7 @@ on: # yamllint disable-line rule:truthy
 jobs:
   # Call the Tag Generator test
   tag-generator:
-    uses: darpa-askem/.github/.github/workflows/tag-generator.yaml@test
+    uses: darpa-askem/.github/.github/workflows/tag-generator.yaml@generator-input-exposure
 
   # Validate the output from the tag generator
   validate-test:
