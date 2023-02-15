@@ -14,9 +14,19 @@ jobs:
   # Call the Tag Generator test
   tag-generator:
     uses: darpa-askem/.github/.github/workflows/tag-generator.yaml@generator-input-exposure
+    with:
+      branch: 'foo'
 
   # Validate the output from the tag generator
   validate-test:
+    runs-on: ubuntu-latest
+    needs:
+      - tag-generator
+    steps:
+      - run: echo ${{ needs.tag-generator.outputs.tag }}
+
+  # Validate the output from the tag generator
+  validate-test-input:
     runs-on: ubuntu-latest
     needs:
       - tag-generator
