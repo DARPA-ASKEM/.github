@@ -1,0 +1,4 @@
+{
+  "name": "Issue Labeler",
+  "description": "Basic automatic issue labeler based RegEx. RegEx should be configured in the '.github/labeler.yaml' file within the repository this is being used in."
+}

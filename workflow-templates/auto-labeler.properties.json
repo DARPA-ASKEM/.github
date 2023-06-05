@@ -1,4 +1,0 @@
-{
-  "name": "Issue Labeler",
-  "description": "Basic automatic issue labeler based on prefixes present in the issue title. Currently supports [FEAT], [BUG] and [TASK]."
-}

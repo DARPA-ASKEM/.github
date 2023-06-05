@@ -1,0 +1,25 @@
+---
+# Automatically adds or removes labels from issues based on the content of the issue and title. Uses regex expression to determine the label to use and each repo must configure their own in '.github/labeler.yaml' file.
+
+name: 'Issue Labeler'
+on:
+  issues:
+    types: [opened, edited, reopened]
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  label_issues:
+    runs-on: ubuntu-22.04
+    permissions:
+      issues: write
+    steps:
+      - name: Label issues
+        uses: github/issue-labeler@v3.1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          configuration-path: .github/labeler.yaml
+          enable-versioned-regex: 0
+          include-title: 1
