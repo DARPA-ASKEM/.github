@@ -56,7 +56,7 @@ jobs:
         id: targets
         run: |
           docker buildx bake ${{ inputs.group }} -f ${{ inputs.file }} --print
-          TARGETS=$(docker buildx bake ${{ inputs.group }} -f ${{ inputs.file }} --print | jq -cr ".group.${{ inputs.group }}.targets")
+          TARGETS=$(docker buildx bake ${{ inputs.group }} -f ${{ inputs.file }} ${{ inputs.flags }} --print | jq -cr ".group.${{ inputs.group }}.targets")
           echo "matrix=$TARGETS" >> $GITHUB_OUTPUT
 
       # 1.3 (optional) - output the generated target list for verification
