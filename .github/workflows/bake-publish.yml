@@ -30,6 +30,11 @@ on:
         type: string
         default: 'latest'
         required: false
+      flags:
+        description: 'Flags to pass to the bake command'
+        type: string
+        default: ''
+        required: false
     secrets:
       username:
         description: 'Username for the docker registry'
