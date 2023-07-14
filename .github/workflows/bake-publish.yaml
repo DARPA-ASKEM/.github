@@ -127,23 +127,14 @@ jobs:
           driver-opts: |
             image=moby/buildkit:v0.10.6
 
-      # 2.6a - Build and push Docker Images with caching
+      # 2.6 - Build and push Docker Images
       - name: Build Images using BuildX Bake
-        if: ${{ inputs.no_cache == 'false' }}
         uses: docker/bake-action@v2
         with:
           files: ./${{ inputs.file }}
           targets: ${{ matrix.target }}
+          no-cache: ${{ inputs.no-cache }}
           push: true
           set: |
             *.cache-from=type=gha,scope=build-${{ matrix.target }}
             *.cache-to=type=gha,scope=build-${{ matrix.target }},mode=max
-
-      # 2.6b - Build and push Docker Images without caching
-      - name: Build Images using BuildX Bake
-        if: ${{ inputs.no-cache == 'true' }}
-        uses: docker/bake-action@v2
-        with:
-          files: ./${{ inputs.file }}
-          targets: ${{ matrix.target }}
-          push: true
