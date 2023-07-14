@@ -30,10 +30,10 @@ on:
         type: string
         default: 'latest'
         required: false
-      flags:
-        description: 'Flags to pass to the bake command'
-        type: string
-        default: ''
+      no-cache:
+        description: 'Flag to disable caching during build'
+        type: boolean
+        default: false
         required: false
     secrets:
       username:
@@ -61,7 +61,7 @@ jobs:
         id: targets
         run: |
           docker buildx bake ${{ inputs.group }} -f ${{ inputs.file }} --print
-          TARGETS=$(docker buildx bake ${{ inputs.group }} -f ${{ inputs.file }} ${{ inputs.flags }} --print | jq -cr ".group.${{ inputs.group }}.targets")
+          TARGETS=$(docker buildx bake ${{ inputs.group }} -f ${{ inputs.file }} --print | jq -cr ".group.${{ inputs.group }}.targets")
           echo "matrix=$TARGETS" >> $GITHUB_OUTPUT
 
       # 1.3 (optional) - output the generated target list for verification
