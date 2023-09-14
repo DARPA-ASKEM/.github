@@ -6,6 +6,11 @@ name: Simple Bake & Publish
 on:
   workflow_call:
     inputs:
+      artifact:
+        description: 'The artifact use in the the build'
+        type: string
+        default: ''
+        required: false
       file:
         description: 'The file name of the bake file to use. If not provided will use default.'
         type: string
@@ -42,6 +47,9 @@ on:
       password:
         description: 'Password for the docker registry'
         required: true
+
+env:
+  ARTIFACT_PATH: artifacts
 
 jobs:
   # Generate a matrix based on all the targets defined in the
@@ -91,7 +99,14 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v3
 
-      # 2.2 - Set environment variables to be used within the bake file
+      # 2.2 - Download all artifacts from the previous job
+      - name: Download all artifacts from the previous job
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ inputs.artifact }}
+          path: ${{ env.ARTIFACT_PATH }}/ # default folder for all artifacts
+
+      # 2.3 - Set environment variables to be used within the bake file
       # NOTE: this overrides the defaults and should be specific to this deployment
       # TAG is determined by the following
       #   - if coming from 'main' tag as latest
@@ -107,8 +122,9 @@ jobs:
           echo "VERSION=${TAG,,}" >> ${GITHUB_ENV}
           echo "DOCKER_REGISTRY=${REG,,}" >> ${GITHUB_ENV}
           echo "DOCKER_ORG=${ORG,,}" >> ${GITHUB_ENV}
+          echo "ARTIFACT=${{ env.ARTIFACT_PATH }}/${{ inputs.artifact }}" >> ${GITHUB_ENV}
 
-      # 2.3 - Login against the docker registry
+      # 2.4 - Login against the docker registry
       - name: Login to registry ${{ inputs.registry }}
         uses: docker/login-action@v2
         with:
@@ -116,18 +132,18 @@ jobs:
           username: ${{ secrets.username }}
           password: ${{ secrets.password }}
 
-      # 2.4 - Setup QEMU for platform emulation
+      # 2.5 - Setup QEMU for platform emulation
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
-      # 2.5 - Setup Docker BuildX for multi platform building
+      # 2.6 - Setup Docker BuildX for multi platform building
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
         with:
           driver-opts: |
             image=moby/buildkit:v0.10.6
 
-      # 2.6 - Build and push Docker Images
+      # 2.7 - Build and push Docker Images
       - name: Build Images using BuildX Bake
         uses: docker/bake-action@v2
         with:
