@@ -103,6 +103,7 @@ jobs:
       - name: Download all artifacts from the previous job
         uses: actions/download-artifact@v3
         with:
+          name: ${{ inputs.artifact }}
           path: ${{ env.ARTIFACT_PATH }}/ # default folder for all artifacts
 
       # 2.3 - Set environment variables to be used within the bake file
