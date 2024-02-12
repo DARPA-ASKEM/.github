@@ -94,21 +94,19 @@ jobs:
       - name: Clean up unused files
         shell: bash
         run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /usr/local/lib/android
-          sudo rm -rf /opt/ghc
-          sudo rm -rf /opt/microsoft
-          sudo rm -rf /opt/mssql-tools
-          sudo rm -rf /usr/share/R
-          sudo rm -rf /usr/share/X11
-          sudo rm -rf /usr/share/apache-*
-          sudo rm -rf /usr/share/java
-          sudo rm -rf /usr/share/php*
-          sudo rm -rf /usr/share/postgresq*
-          sudo rm -rf /usr/share/sbt
-          sudo rm -rf /usr/share/vim
-          sudo rm -rf /usr/local/lib/lein
-          sudo rm -rf /usr/local/lib/R
+          sudo rm -rf /usr/share/dotnet || true
+          sudo rm -rf /usr/local/lib/android || true
+          sudo rm -rf /opt/ghc || true
+          sudo rm -rf /opt/microsoft || true
+          sudo rm -rf /opt/mssql-tools || true
+          sudo rm -rf /usr/share/X11 || true
+          sudo rm -rf /usr/share/apache-* || true
+          sudo rm -rf /usr/share/java || true
+          sudo rm -rf /usr/share/php* || true
+          sudo rm -rf /usr/share/postgresq* || true
+          sudo rm -rf /usr/share/sbt || true
+          sudo rm -rf /usr/share/vim || true
+          sudo rm -rf /usr/local/lib/lein || true
 
       # 2.2 - Set environment variables to be used within the bake file
       # NOTE: this overrides the defaults and should be specific to this deployment
