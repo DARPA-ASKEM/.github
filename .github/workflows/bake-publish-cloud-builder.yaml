@@ -101,7 +101,7 @@
           id: meta
           uses: docker/metadata-action@v5.5.0
           with:
-            images: ghcr.io/${{ github.repository }}
+            images: ghcr.io/${{ github.repository_owner }}/${{ matrix.target }}
             tags: |
               type=semver,pattern={{version}}
               type=ref,event=tag
