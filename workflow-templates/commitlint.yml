@@ -13,7 +13,7 @@ jobs:
   commitlint:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       # Uncomment this if you want to validate all commits in this PR not just the PR comment
       # with:
       #   fetch-depth: 0

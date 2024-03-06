@@ -54,7 +54,7 @@ jobs:
     steps:
       # 1.1 - checkout the files
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 1.2 - Generate a matrix output of all the targets for the specified group
       - name: Create matrix
@@ -89,7 +89,7 @@ jobs:
     steps:
       # 2.1 - Checkout the repository
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 2.2 - Set environment variables to be used within the bake file
       # NOTE: this overrides the defaults and should be specific to this deployment
@@ -110,7 +110,7 @@ jobs:
 
       # 2.3 - Login against the docker registry
       - name: Login to registry ${{ inputs.registry }}
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3.0.0
         with:
           registry: ${{ inputs.registry }}
           username: ${{ secrets.username }}
@@ -118,15 +118,15 @@ jobs:
 
       # 2.4 - Setup QEMU for platform emulation
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3.0.0
 
       # 2.5 - Setup Docker BuildX for multi platform building
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3.0.0
 
       # 2.6 - Build and push Docker Images
       - name: Build Images using BuildX Bake
-        uses: docker/bake-action@v2
+        uses: docker/bake-action@v4.1.0
         with:
           files: ./${{ inputs.file }}
           targets: ${{ matrix.target }}

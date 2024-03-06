@@ -26,7 +26,7 @@ jobs:
 
     steps:
       # 1 - checkout the request
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # 2 - lint all dockerfiles found
       - name: Lint Dockerfiles

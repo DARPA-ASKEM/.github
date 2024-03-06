@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       # 1 - checkout branch
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # 2 - Lint YAML files
       - name: Lint Yaml
