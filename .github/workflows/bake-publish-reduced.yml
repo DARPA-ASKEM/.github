@@ -108,6 +108,19 @@ jobs:
           sudo rm -rf /usr/share/vim || true
           sudo rm -rf /usr/local/lib/lein || true
 
+      # Remount the docker data volume to /mnt which has more space
+      # this way it is not competing with the root filesystem for space
+      # and gives a bit more breathing room for the builds
+      # Approximately: 32GB -> 66GB free space as compared to the root mount (after cleanup)
+      - name: Patch Docker Mount Point
+        run: |
+          DOCKER_DATA_ROOT='/mnt/var/lib/docker'
+          DOCKER_DAEMON_JSON='/etc/docker/daemon.json'
+          sudo mkdir -p "${DOCKER_DATA_ROOT}"
+          jq --arg dataroot "${DOCKER_DATA_ROOT}" '. + {"data-root": $dataroot}' "${DOCKER_DAEMON_JSON}" > "/tmp/docker.json.tmp"
+          sudo mv "/tmp/docker.json.tmp" "${DOCKER_DAEMON_JSON}"
+          sudo systemctl restart docker
+
       # 2.2 - Set environment variables to be used within the bake file
       # NOTE: this overrides the defaults and should be specific to this deployment
       # TAG is determined by the following
