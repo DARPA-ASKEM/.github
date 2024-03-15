@@ -101,7 +101,7 @@ jobs:
 
       # 2.2 - Download all artifacts from the previous job
       - name: Download all artifacts from the previous job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ inputs.artifact }}
           path: ${{ env.ARTIFACT_PATH }}/ # default folder for all artifacts
