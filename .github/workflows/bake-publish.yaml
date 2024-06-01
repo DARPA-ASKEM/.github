@@ -126,7 +126,7 @@ jobs:
 
       # 2.4 - Login against the docker registry
       - name: Login to registry ${{ inputs.registry }}
-        uses: docker/login-action@v3.1.0
+        uses: docker/login-action@v3.2.0
         with:
           registry: ${{ inputs.registry }}
           username: ${{ secrets.username }}
