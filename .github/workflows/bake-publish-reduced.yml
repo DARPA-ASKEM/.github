@@ -156,7 +156,7 @@ jobs:
 
       # 2.6 - Build and push Docker Images
       - name: Build Images using BuildX Bake
-        uses: docker/bake-action@v4.5.0
+        uses: docker/bake-action@v5.2.0
         with:
           files: ./${{ inputs.file }}
           targets: ${{ matrix.target }}

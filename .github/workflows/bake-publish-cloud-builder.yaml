@@ -55,7 +55,7 @@
         # 1.2 - Generate a matrix output of all the targets for the specified group
         - name: List targets
           id: generate
-          uses: docker/bake-action/subaction/list-targets@v4.5.0
+          uses: docker/bake-action/subaction/list-targets@v5.2.0
           with:
             target: ${{ inputs.group }}
             files: ${{ inputs.file }}
@@ -136,7 +136,7 @@
 
         # 2.6 - Build Docker Images
         - name: Build Images using BuildX Bake
-          uses: docker/bake-action@v4.5.0
+          uses: docker/bake-action@v5.2.0
           with:
             files: |
               ${{ inputs.file }}
